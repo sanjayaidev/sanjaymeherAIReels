@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjay's Reels - Direct Player</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #121212; /* Dark Mode Background */
+            color: white;
+            padding: 2rem 1rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #405de6, #833ab4, #e1306c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .reels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            justify-items: center;
+        }
+        .reel-card {
+            background: #1e1e1e;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            padding: 1rem;
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.2s;
+        }
+        .reel-card:hover { transform: translateY(-4px); }
+        
+        /* Player Styles */
+        .video-wrapper {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            position: relative;
+            aspect-ratio: 9/16; /* Standard Reel Aspect Ratio */
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Status Indicators */
+        .status {
+            text-align: center;
+            padding: 1rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .loading-spinner {
+            border: 4px solid #333;
+            border-top: 4px solid #e1306c;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 100px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .footer { text-align: center; margin-top: 3rem; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ AI Video Reels</h1>
+            <p>by <strong>@freelance.sanjay</strong></p>
+        </div>
+
+        <div class="reels-grid" id="reelsGrid">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <div class="footer">
+            <a href="https://www.instagram.com/freelance.sanjay/" target="_blank" style="color:#e1306c;">
+                Follow @freelance.sanjay on Instagram
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const reelUrls = [
+            'https://www.instagram.com/freelance.sanjay/reel/Dbe3bXls-Vm/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbZvbOsMomW/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbcistBMBdb/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbWJc4bS9hI/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbSAdbtsSXD/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbLZL7is2Sc/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbBluUpygxa/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbIz3o2ML7M/',
+            'https://www.instagram.com/freelance.sanjay/reel/DaDQVOasR8i/',
+            'https://www.instagram.com/freelance.sanjay/reel/DaF8eUoPhe4/',
+            'https://www.instagram.com/freelance.sanjay/reel/DaIU0uEMpW3/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbFOJ5jSRlL/',
+            'https://www.instagram.com/freelance.sanjay/reel/DbkNnGKMfqs/'
+        ];
+
+        async function loadReels() {
+            const grid = document.getElementById('reelsGrid');
+            grid.innerHTML = ''; // Clear spinner
+
+            for (const url of reelUrls) {
+                const card = document.createElement('div');
+                card.className = 'reel-card';
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'video-wrapper';
+                wrapper.innerHTML = '<div class="status">Loading video...</div>';
+                
+                card.appendChild(wrapper);
+                grid.appendChild(card);
+
+                try {
+                    // Call our own backend API to get the video URL
+                    const response = await fetch(`/api/stream?url=${encodeURIComponent(url)}`);
+                    const data = await response.json();
+
+                    if (data.videoUrl) {
+                        // Success! Insert the HTML5 Video Player
+                        wrapper.innerHTML = `
+                            <video 
+                                src="${data.videoUrl}" 
+                                controls 
+                                loop 
+                                muted 
+                                playsinline
+                                onplay="this.muted=false"
+                            ></video>
+                        `;
+                        // Optional: autoplay on hover could be added here
+                    } else {
+                        throw new Error(data.error || 'No URL found');
+                    }
+                } catch (error) {
+                    console.error('Error loading reel:', url, error);
+                    wrapper.innerHTML = `
+                        <div class="status" style="color:#e1306c;">
+                            ⚠️ Could not load video<br>
+                            <a href="${url}" target="_blank" style="color:#fff;">Watch on Instagram</a>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadReels);
+    </script>
+</body>
+</html>
