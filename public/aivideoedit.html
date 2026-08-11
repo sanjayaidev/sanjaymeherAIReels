@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Reel Editing · Sanjay Meher</title>
+  <meta name="description" content="Professional AI-powered reel editing for brands & creators. ₹300/reel, packages available. Fast, cinematic, scroll-stopping." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      --bg:#0b0b14;
+      --bg-card:#14141f;
+      --bg-card-hover:#1a1a29;
+      --text:#f2f1f7;
+      --text-dim:#a8a3bd;
+      --border:rgba(255,255,255,0.09);
+      --accent:#8b5cf6;
+      --accent-light:#c4b5fd;
+      --accent-dim:rgba(139,92,246,0.14);
+      --holo1:#8b5cf6;
+      --holo2:#38bdf8;
+      --holo3:#f472b6;
+      --wa:#25d366;
+      --radius:16px;
+      background:var(--bg);
+      color:var(--text);
+      font-family:'DM Sans',sans-serif;
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+    }
+    h1,h2,h3,h4{ font-family:'Syne',sans-serif;font-weight:800;line-height:1.15;letter-spacing:-0.01em; }
+    a{ color:inherit;text-decoration:none; }
+    .container{ max-width:1080px;margin:0 auto;padding:0 1.25rem; }
+    section{ padding:4.5rem 0; }
+    :focus-visible{ outline:2px solid var(--accent-light);outline-offset:3px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    }
+
+    .holo-text {
+      background:linear-gradient(100deg, var(--holo1), var(--holo2), var(--holo3), var(--holo2), var(--holo1));
+      background-size:300% 100%;
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      animation:holoShift 6s ease-in-out infinite;
+    }
+    @keyframes holoShift{ 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+    @media (prefers-reduced-motion: reduce){ .holo-text{ animation:none;background-position:30% 50%; } }
+
+    .topbar {
+      position:sticky;top:0;z-index:50;
+      background:rgba(11,11,20,0.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .topbar .container{ display:flex;align-items:center;justify-content:space-between;height:64px;gap:0.8rem;flex-wrap:wrap; }
+    .brand{ font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem; }
+    .brand .sub{ display:block;font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px; }
+    .topbar-links{ display:flex;align-items:center;gap:0.6rem; }
+    .btn {
+      display:inline-flex;align-items:center;gap:0.5rem;
+      font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.9rem;
+      padding:0.7rem 1.4rem;border-radius:999px;
+      transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+      border:1px solid transparent;
+      white-space:nowrap;cursor:pointer;
+    }
+    .btn:hover{ transform:translateY(-3px) scale(1.02);box-shadow:0 12px 28px -8px rgba(139,92,246,0.3); }
+    .btn-primary{ background:var(--accent);color:#fff; }
+    .btn-primary:hover{ filter:brightness(1.12); }
+    .btn-secondary{ background:transparent;color:var(--text);border:1px solid var(--border); }
+    .btn-secondary:hover{ background:var(--bg-card);border-color:var(--accent-light);color:var(--accent-light); }
+    .btn-wa{ background:var(--wa);color:#fff; }
+    .btn-wa:hover{ filter:brightness(1.08); }
+    .btn-sm{ padding:0.55rem 1.1rem;font-size:0.82rem; }
+
+    .hero{ padding:3rem 0 1.5rem;text-align:center; }
+    .badge {
+      display:inline-flex;align-items:center;gap:0.5rem;
+      background:var(--accent-dim);color:var(--accent-light);
+      border:1px solid rgba(139,92,246,0.3);
+      padding:0.45rem 1rem;border-radius:999px;
+      font-size:0.82rem;font-weight:600;margin-bottom:1.75rem;
+    }
+    .dot{ width:7px;height:7px;border-radius:50%;background:var(--wa);animation:pulse 1.8s infinite; }
+    @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+    .hero h1{ font-size:clamp(2.2rem,5.6vw,3.6rem);max-width:800px;margin:0 auto 1.4rem; }
+    .hero-sub{ max-width:600px;margin:0 auto 2.2rem;color:var(--text-dim);font-size:1.05rem; }
+    .hero-sub strong{ color:var(--text); }
+    .hero-ctas{ display:flex;gap:0.9rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.8rem; }
+
+    .stats {
+      display:flex;justify-content:center;gap:2.4rem;flex-wrap:wrap;
+      border-top:1px solid var(--border);padding-top:2rem;max-width:680px;margin:0 auto;
+    }
+    .stat .num{ display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--accent-light);transition:0.2s; }
+    .stat:hover .num{ transform:scale(1.08);color:#fff; }
+    .stat .lbl{ font-size:0.78rem;color:var(--text-dim); }
+
+    .eyebrow {
+      display:inline-block;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;
+      text-transform:uppercase;color:var(--accent-light);margin-bottom:0.9rem;
+    }
+    .section-head{ text-align:center;max-width:640px;margin:0 auto 3rem; }
+    .section-head h2{ font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:0.8rem; }
+    .section-head p{ color:var(--text-dim); }
+
+    .pricing-grid {
+      display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;
+    }
+    .price-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:2rem 1.5rem;text-align:center;
+      transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+      display:flex;flex-direction:column;align-items:center;
+    }
+    .price-card:hover{ transform:translateY(-8px);background:var(--bg-card-hover);border-color:var(--accent-dim);box-shadow:0 20px 40px -16px rgba(139,92,246,0.3); }
+    .price-card .p-name{ font-size:0.9rem;font-weight:600;color:var(--text-dim);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.3rem; }
+    .price-card .amount{ font-family:'Syne',sans-serif;font-weight:800;font-size:2.4rem;margin:0.2rem 0 0.1rem; }
+    .price-card .amount sup{ font-size:0.9rem;color:var(--text-dim);font-weight:600; }
+    .price-card .per{ font-size:0.78rem;color:var(--text-dim);margin-bottom:1.2rem; }
+    .price-card ul{ list-style:none;text-align:left;width:100%;margin:0.8rem 0 1.4rem; }
+    .price-card ul li{ font-size:0.88rem;margin-bottom:0.6rem;display:flex;gap:0.6rem;color:var(--text-dim); }
+    .price-card ul li i{ color:var(--accent-light);margin-top:0.2rem; }
+    .price-card .btn{ width:100%;justify-content:center; }
+    .price-card.popular {
+      border-color:var(--accent);
+      box-shadow:0 0 0 1px rgba(139,92,246,0.3), 0 20px 40px -16px rgba(139,92,246,0.25);
+    }
+    .popular-badge {
+      background:var(--accent);color:#fff;font-size:0.65rem;font-weight:700;
+      padding:0.2rem 0.9rem;border-radius:999px;text-transform:uppercase;
+      letter-spacing:0.06em;margin-bottom:1rem;
+    }
+
+    .reels-grid {
+      display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+      gap:1rem;justify-items:center;
+    }
+    .reel-slot {
+      width:100%;max-width:200px;aspect-ratio:9/16;border-radius:var(--radius);overflow:hidden;
+      background:var(--bg-card);border:1px solid var(--border);
+      position:relative;transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+    .reel-slot:hover{ transform:translateY(-4px);border-color:var(--accent-dim);box-shadow:0 16px 32px -16px rgba(139,92,246,0.3); }
+    .reel-slot iframe{ width:100%;height:100%;border:0;position:absolute;inset:0; }
+
+    .feat-grid{ display:grid;grid-template-columns:repeat(4,1fr);gap:1rem; }
+    .feat-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.3rem;transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+      text-align:center;
+    }
+    .feat-card:hover{ transform:translateY(-4px);background:var(--bg-card-hover);border-color:var(--accent-dim); }
+    .feat-card i{ color:var(--accent-light);font-size:1.3rem;margin-bottom:0.7rem;display:block; }
+    .feat-card h4{ font-size:0.92rem;font-weight:700;font-family:'DM Sans',sans-serif; }
+
+    .form-wrap {
+      max-width:560px;margin:0 auto;
+      background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:2.2rem;
+      transition:0.3s;
+    }
+    .form-wrap:hover{ border-color:var(--accent-dim); }
+    .field{ margin-bottom:1.1rem; }
+    .field label{ display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.45rem;color:var(--text-dim); }
+    .field input,.field select {
+      width:100%;background:var(--bg);border:1px solid var(--border);
+      color:var(--text);border-radius:10px;padding:0.75rem 0.9rem;font-size:0.95rem;
+      font-family:'DM Sans',sans-serif;
+      transition:0.2s;
+    }
+    .field input:focus,.field select:focus{ border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(139,92,246,0.2); }
+    .form-wrap .btn{ width:100%;justify-content:center;margin-top:0.4rem; }
+    .form-note{ text-align:center;font-size:0.82rem;color:var(--text-dim);margin-top:1rem; }
+    .form-note a{ color:var(--accent-light);font-weight:600; }
+    #formStatus{ text-align:center;font-size:0.85rem;margin-top:0.8rem;min-height:1.2em;color:var(--wa); }
+
+    .instructor {
+      display:flex;gap:2rem;align-items:center;
+      background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:2.2rem;
+      transition: all 0.3s ease;
+    }
+    .instructor:hover{ border-color:var(--accent-dim);box-shadow:0 20px 40px -20px rgba(139,92,246,0.2); }
+    .instructor .pic {
+      width:80px;height:80px;border-radius:50%;flex-shrink:0;
+      background:linear-gradient(135deg,var(--accent),#5b21b6);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;color:#fff;
+      box-shadow:0 0 0 3px rgba(139,92,246,0.3);
+      transition:0.3s;overflow:hidden;
+    }
+    .instructor .pic img{ width:100%;height:100%;object-fit:cover; }
+    .instructor:hover .pic{ box-shadow:0 0 0 6px rgba(139,92,246,0.5);transform:scale(1.03); }
+    .instructor h3{ font-size:1.2rem;margin-bottom:0.3rem; }
+    .instructor .role{ color:var(--accent-light);font-size:0.85rem;font-weight:600;margin-bottom:0.7rem; }
+    .instructor p{ color:var(--text-dim);font-size:0.92rem; }
+
+    .faq-item{ border-bottom:1px solid var(--border);padding:1.2rem 0; }
+    .faq-item summary {
+      cursor:pointer;font-weight:700;font-size:0.98rem;list-style:none;
+      display:flex;justify-content:space-between;align-items:center;
+      transition:0.2s;
+    }
+    .faq-item summary:hover{ color:var(--accent-light); }
+    .faq-item summary::-webkit-details-marker{ display:none; }
+    .faq-item summary::after{ content:'+';font-size:1.3rem;color:var(--accent-light);font-weight:400;transition:0.25s; }
+    .faq-item[open] summary::after{ content:'–';transform:rotate(180deg); }
+    .faq-item p{ color:var(--text-dim);font-size:0.9rem;margin-top:0.7rem; }
+
+    footer{ border-top:1px solid var(--border);padding:2.2rem 0;text-align:center; }
+    footer p{ font-size:0.82rem;color:var(--text-dim); }
+
+    .wa-float {
+      position:fixed;bottom:1.4rem;right:1.4rem;z-index:60;
+      width:56px;height:56px;border-radius:50%;background:var(--wa);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 24px rgba(37,211,102,0.4);
+      transition: all 0.3s ease;
+    }
+    .wa-float:hover{ transform:scale(1.1) rotate(-2deg);box-shadow:0 12px 32px rgba(37,211,102,0.6); }
+
+    @media (max-width:760px){
+      .pricing-grid{ grid-template-columns:1fr;max-width:400px;margin:0 auto; }
+      .feat-grid{ grid-template-columns:1fr 1fr; }
+      .instructor{ flex-direction:column;text-align:center; }
+      section{ padding:3rem 0; }
+    }
+    @media (max-width:480px){
+      .feat-grid{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="topbar">
+  <div class="container">
+    <div class="brand">AI Reel Editing<span class="sub">by Sanjay Meher</span></div>
+    <div class="topbar-links">
+      <a href="#pricing" class="btn btn-primary btn-sm">View packages</a>
+      <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I'm%20interested%20in%20your%20AI%20reel%20editing%20service" target="_blank" rel="noopener" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> Ask a question</a>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="badge"><span class="dot"></span> AI-powered · scroll-stopping · 30–40s reels</div>
+      <h1><span class="holo-text">AI Reel Editing</span> for brands, creators &amp; agencies</h1>
+      <p class="hero-sub">Professional, cinematic reels with AI-assisted motion, holographic looks, and ad-ready composition — <strong>starting at ₹300/reel</strong>.</p>
+      <div class="hero-ctas">
+        <a href="#pricing" class="btn btn-primary">See packages →</a>
+        <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I'm%20interested%20in%20your%20AI%20reel%20editing%20service" target="_blank" rel="noopener" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="num">₹300</span><span class="lbl">per reel (30–40s)</span></div>
+        <div class="stat"><span class="num">₹5,000</span><span class="lbl">20-reel package</span></div>
+        <div class="stat"><span class="num">Custom</span><span class="lbl">ask for requirements</span></div>
+      </div>
+    </section>
+
+    <!-- WHY AI REEL EDITING -->
+    <section>
+      <div class="section-head">
+        <div class="eyebrow">Why AI reel editing?</div>
+        <h2>Speed, style, and scroll-stopping visuals</h2>
+        <p>Not generic templates — I use AI to build a distinct, high-end look that grabs attention in the first 2 seconds.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card"><i class="fa-solid fa-cube"></i><h4>3D / Holographic look</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-wand-magic-sparkles"></i><h4>AI motion &amp; glow</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-bolt"></i><h4>Fast turnaround</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-chart-line"></i><h4>Ad-optimised</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-camera-rotate"></i><h4>Dynamic transitions</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-music"></i><h4>Sound design + captions</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-display"></i><h4>Reels / Shorts / TikTok</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-pen-ruler"></i><h4>Custom creative direction</h4></div>
+      </div>
+    </section>
+
+    <!-- SHOWCASE (reels) -->
+    <section>
+      <div class="section-head">
+        <div class="eyebrow">My work</div>
+        <h2>Recent AI-assisted reels</h2>
+        <p>Real examples from <a href="https://www.instagram.com/freelance.sanjay/" target="_blank" rel="noopener" style="color:var(--accent-light);font-weight:600;">@freelance.sanjay</a> — all edited using my AI workflow.</p>
+      </div>
+      <div class="reels-grid">
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=Dbe3bXls-Vm" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbZvbOsMomW" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbcistBMBdb" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbWJc4bS9hI" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbSAdbtsSXD" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbLZL7is2Sc" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbBluUpygxa" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbIz3o2ML7M" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+      <div class="section-head">
+        <div class="eyebrow">Transparent pricing</div>
+        <h2>Choose what fits you</h2>
+        <p>No hidden fees. Every reel is 30–40 seconds, designed for social ads.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="p-name">Single reel</div>
+          <div class="amount"><sup>₹</sup>300</div>
+          <div class="per">per reel · 30–40s</div>
+          <ul>
+            <li><i class="fa-solid fa-check"></i>AI-assisted motion &amp; glow</li>
+            <li><i class="fa-solid fa-check"></i>Sound design + captions</li>
+            <li><i class="fa-solid fa-check"></i>2 revisions</li>
+            <li><i class="fa-solid fa-check"></i>Delivery in 48h</li>
+          </ul>
+          <a href="#book" class="btn btn-primary">Order now →</a>
+        </div>
+
+        <div class="price-card popular">
+          <div class="popular-badge">Best value</div>
+          <div class="p-name">20-reel package</div>
+          <div class="amount"><sup>₹</sup>5,000</div>
+          <div class="per">₹250/reel · 20 reels</div>
+          <ul>
+            <li><i class="fa-solid fa-check"></i>Everything in single</li>
+            <li><i class="fa-solid fa-check"></i>Priority scheduling</li>
+            <li><i class="fa-solid fa-check"></i>Bulk discount</li>
+            <li><i class="fa-solid fa-check"></i>Consistent style across all</li>
+          </ul>
+          <a href="#book" class="btn btn-primary">Get the package →</a>
+        </div>
+
+        <div class="price-card">
+          <div class="p-name">Custom</div>
+          <div class="amount" style="font-size:2rem;">Let's talk</div>
+          <div class="per">Complex projects · series · unique styles</div>
+          <ul>
+            <li><i class="fa-solid fa-check"></i>Tailored creative direction</li>
+            <li><i class="fa-solid fa-check"></i>3D holographic / product viz</li>
+            <li><i class="fa-solid fa-check"></i>Unlimited revisions (on request)</li>
+            <li><i class="fa-solid fa-check"></i>Dedicated support</li>
+          </ul>
+          <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I%20have%20a%20custom%20reel%20project%20in%20mind" target="_blank" rel="noopener" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Discuss custom</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / INSTRUCTOR -->
+    <section>
+      <div class="section-head">
+        <div class="eyebrow">Who edits your reels</div>
+        <h2>Sanjay Meher</h2>
+        <p>7+ years of editing experience · 18+ brands · AI workflow specialist</p>
+      </div>
+      <div class="instructor">
+        <div class="pic">
+          <img src="https://sanjaymeher.online/images/passport.jpg" alt="Sanjay Meher" />
+        </div>
+        <div>
+          <h3>Sanjay Meher</h3>
+          <div class="role">Video Editor &amp; AI Creative</div>
+          <p>I've edited for brands across gaming, food, fashion, tech, and real estate. My AI-assisted workflow combines cinematic composition with cutting-edge tools — so your reels look premium without a massive production budget. Every edit is done by me, personally.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+      <div class="section-head">
+        <div class="eyebrow">Quick answers</div>
+        <h2>FAQs</h2>
+      </div>
+      <div style="max-width:680px;margin:0 auto;">
+        <details class="faq-item" open>
+          <summary>What exactly is "AI reel editing"?</summary>
+          <p>I use AI tools to generate motion, glow, holographic effects, and scene transitions — which gives your reel a premium 3D-style look without a studio shoot. It's not a filter; it's a creative workflow.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How long is each reel?</summary>
+          <p>Typically 30 to 40 seconds, optimised for Instagram Reels, YouTube Shorts, and TikTok.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What do I need to provide?</summary>
+          <p>Just the raw footage (or product photos), any branding assets (logo, colors), and a brief on the vibe you want. I'll handle the rest.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How many revisions are included?</summary>
+          <p>2 revisions per single reel, and up to 3 for the package. Custom projects get a flexible revision policy.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can you match my brand's existing style?</summary>
+          <p>Yes — I can adapt the AI effects and motion to fit your brand's visual identity. Just share references.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you offer a trial?</summary>
+          <p>You can order a single reel to test the style and quality before committing to a package.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- BOOKING FORM -->
+    <section id="book">
+      <div class="section-head">
+        <div class="eyebrow">Get started</div>
+        <h2>Order your reel(s)</h2>
+        <p>Fill this in and I'll reach out on WhatsApp to confirm details.</p>
+      </div>
+      <div class="form-wrap">
+        <form id="bookingForm">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input type="text" id="name" required placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label for="phone">WhatsApp number</label>
+            <input type="tel" id="phone" required placeholder="10-digit mobile number" />
+          </div>
+          <div class="field">
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label for="package">Which package?</label>
+            <select id="package">
+              <option value="Single reel — ₹300">Single reel — ₹300</option>
+              <option value="20-reel package — ₹5,000" selected>20-reel package — ₹5,000</option>
+              <option value="Custom — let's discuss">Custom — let's discuss</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Send on WhatsApp</button>
+        </form>
+        <p id="formStatus"></p>
+        <p class="form-note">Prefer to chat first? <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I'm%20interested%20in%20your%20AI%20reel%20editing%20service" target="_blank" rel="noopener">Message Sanjay directly →</a></p>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section style="text-align:center;padding:2rem 0 4rem;">
+      <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:1rem;">Ready to make reels that stop the scroll?</h2>
+      <p style="color:var(--text-dim);max-width:480px;margin:0 auto 2rem;">AI-powered, cinematic, and built for social ads — at a price that fits your budget.</p>
+      <a href="#pricing" class="btn btn-primary">Choose your package →</a>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Sanjay Meher · AI Reel Editing · ₹300/reel · 20-reel package ₹5,000</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I'm%20interested%20in%20your%20AI%20reel%20editing%20service" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp" style="font-size:26px;color:#fff;"></i>
+</a>
+
+<script>
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const pkg = document.getElementById('package').value;
+
+    let msg = `Hi Sanjay, I'm interested in your AI Reel Editing service.\n\nName: ${name}\nWhatsApp: ${phone}`;
+    if(email) msg += `\nEmail: ${email}`;
+    msg += `\nPackage: ${pkg}`;
+
+    const url = `https://wa.me/918984636695?text=${encodeURIComponent(msg)}`;
+    document.getElementById('formStatus').textContent = 'Opening WhatsApp...';
+    window.open(url, '_blank', 'noopener');
+  });
+</script>
+</body>
+</html>
