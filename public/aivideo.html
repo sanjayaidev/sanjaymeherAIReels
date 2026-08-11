@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>3D Holographic Ads, Made with Free AI Tools | Sanjay Meher</title>
+  <meta name="description" content="A recorded course on making 3D holographic and product visualization videos using free AI tools. Not a generic AI editing course — ₹99, watch anytime." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      --bg:#0b0b14;
+      --bg-card:#14141f;
+      --bg-card-hover:#1a1a29;
+      --text:#f2f1f7;
+      --text-dim:#a8a3bd;
+      --border:rgba(255,255,255,0.09);
+      --accent:#8b5cf6;
+      --accent-light:#c4b5fd;
+      --accent-dim:rgba(139,92,246,0.14);
+      --holo1:#8b5cf6;
+      --holo2:#38bdf8;
+      --holo3:#f472b6;
+      --wa:#25d366;
+      --radius:16px;
+      background:var(--bg);
+      color:var(--text);
+      font-family:'DM Sans',sans-serif;
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+    }
+    h1,h2,h3,h4{ font-family:'Syne',sans-serif;font-weight:800;line-height:1.15;letter-spacing:-0.01em; }
+    a{ color:inherit;text-decoration:none; }
+    .container{ max-width:1080px;margin:0 auto;padding:0 1.25rem; }
+    section{ padding:5rem 0; }
+    :focus-visible{ outline:2px solid var(--accent-light);outline-offset:3px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+    }
+
+    /* holographic text — the one signature moment on the page */
+    .holo-text {
+      background:linear-gradient(100deg, var(--holo1), var(--holo2), var(--holo3), var(--holo2), var(--holo1));
+      background-size:300% 100%;
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      animation:holoShift 6s ease-in-out infinite;
+    }
+    @keyframes holoShift{ 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+    @media (prefers-reduced-motion: reduce){ .holo-text{ animation:none;background-position:30% 50%; } }
+
+    /* top bar */
+    .topbar {
+      position:sticky;top:0;z-index:50;
+      background:rgba(11,11,20,0.82);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .topbar .container{ display:flex;align-items:center;justify-content:space-between;height:64px;gap:0.8rem;flex-wrap:wrap; }
+    .brand{ font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem; }
+    .brand .sub{ display:block;font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;text-transform:uppercase;margin-top:1px; }
+    .topbar-links{ display:flex;align-items:center;gap:0.6rem; }
+    .btn {
+      display:inline-flex;align-items:center;gap:0.5rem;
+      font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.9rem;
+      padding:0.7rem 1.4rem;border-radius:999px;
+      transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+      border:1px solid transparent;
+      white-space:nowrap;cursor:pointer;
+    }
+    .btn:hover{ transform:translateY(-3px) scale(1.02);box-shadow:0 12px 28px -8px rgba(139,92,246,0.3); }
+    .btn-primary{ background:var(--accent);color:#fff; }
+    .btn-primary:hover{ filter:brightness(1.12); }
+    .btn-secondary{ background:transparent;color:var(--text);border:1px solid var(--border); }
+    .btn-secondary:hover{ background:var(--bg-card);border-color:var(--accent-light);color:var(--accent-light); }
+    .btn-wa{ background:var(--wa);color:#fff; }
+    .btn-wa:hover{ filter:brightness(1.08); }
+    .btn-sm{ padding:0.55rem 1.1rem;font-size:0.82rem; }
+
+    /* hero */
+    .hero{ padding:4rem 0 2.5rem;text-align:center; }
+    .badge {
+      display:inline-flex;align-items:center;gap:0.5rem;
+      background:var(--accent-dim);color:var(--accent-light);
+      border:1px solid rgba(139,92,246,0.3);
+      padding:0.45rem 1rem;border-radius:999px;
+      font-size:0.82rem;font-weight:600;margin-bottom:1.75rem;
+      animation:floatBadge 4s ease-in-out infinite;
+    }
+    @keyframes floatBadge { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
+    .dot{ width:7px;height:7px;border-radius:50%;background:var(--wa);animation:pulse 1.8s infinite; }
+    @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+    .hero h1{ font-size:clamp(2.2rem,5.6vw,3.6rem);max-width:800px;margin:0 auto 1.4rem; }
+    .hero-sub{ max-width:600px;margin:0 auto 2.2rem;color:var(--text-dim);font-size:1.05rem; }
+    .hero-sub strong{ color:var(--text); }
+    .hero-ctas{ display:flex;gap:0.9rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.8rem; }
+    .stats {
+      display:flex;justify-content:center;gap:2.4rem;flex-wrap:wrap;
+      border-top:1px solid var(--border);padding-top:2rem;max-width:680px;margin:0 auto;
+    }
+    .stat .num{ display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--accent-light);transition:0.2s; }
+    .stat:hover .num{ transform:scale(1.08);color:#fff; }
+    .stat .lbl{ font-size:0.78rem;color:var(--text-dim); }
+
+    /* strip */
+    .strip {
+      border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+      background:var(--bg-card);padding:1.1rem 0;
+      overflow:hidden;
+    }
+    .strip .track{ display:flex;gap:2.5rem;white-space:nowrap;animation:scroll-x 26s linear infinite;width:max-content; }
+    .strip span{ font-size:0.85rem;color:var(--text-dim);font-weight:500; }
+    .strip span i{ color:var(--accent-light);margin-right:0.4rem; }
+    @keyframes scroll-x{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+    /* section headers */
+    .eyebrow {
+      display:inline-block;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;
+      text-transform:uppercase;color:var(--accent-light);margin-bottom:0.9rem;
+    }
+    .section-head{ text-align:center;max-width:640px;margin:0 auto 3rem; }
+    .section-head h2{ font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:0.8rem; }
+    .section-head p{ color:var(--text-dim); }
+
+    /* problems */
+    .problems{ display:grid;grid-template-columns:repeat(2,1fr);gap:1rem; }
+    .p-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;
+      transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+    .p-card:hover{ background:var(--bg-card-hover);transform:translateY(-4px);box-shadow:0 12px 28px -12px rgba(0,0,0,0.5);border-color:var(--accent-dim); }
+    .p-q{ font-size:0.92rem;color:var(--text-dim);font-style:italic;margin-bottom:0.6rem; }
+    .p-a{ font-weight:700;font-size:0.97rem; }
+    .p-a i{ color:var(--wa);margin-right:0.4rem; }
+
+    /* who is it for */
+    .who-grid{ display:grid;grid-template-columns:repeat(5,1fr);gap:1rem; }
+    .who-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.5rem 1.2rem;text-align:center;
+      transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+    .who-card:hover{ transform:translateY(-6px);background:var(--bg-card-hover);border-color:var(--accent-dim);box-shadow:0 16px 32px -16px rgba(139,92,246,0.25); }
+    .who-icon {
+      width:46px;height:46px;border-radius:50%;margin:0 auto 0.9rem;
+      background:var(--accent-dim);border:1px solid rgba(139,92,246,0.3);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.1rem;color:var(--accent-light);
+    }
+    .who-card h4{ font-size:0.98rem;margin-bottom:0.5rem; }
+    .who-card p{ font-size:0.8rem;color:var(--text-dim);line-height:1.5; }
+
+    /* video showcase — Instagram reel embeds */
+    .reels-grid {
+      display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+      gap:1.4rem;justify-items:center;
+    }
+    .reels-grid iframe{ border-radius:var(--radius) !important; }
+    .instagram-media{ margin:0 !important;border-color:var(--border) !important;background:var(--bg-card) !important; }
+
+    /* modules */
+    .modules-grid{ display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem; }
+    .mod-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.6rem;transition: all 0.3s cubic-bezier(0.23,1,0.32,1);position:relative;overflow:hidden;
+    }
+    .mod-card:hover{ transform:translateY(-4px);background:var(--bg-card-hover);border-color:var(--accent-dim);box-shadow:0 16px 32px -16px rgba(139,92,246,0.25); }
+    .mod-num{ font-family:'Syne',sans-serif;font-weight:800;font-size:0.78rem;color:var(--accent-light);letter-spacing:0.05em;margin-bottom:0.6rem;display:block; }
+    .mod-card h4{ font-size:1.02rem;margin-bottom:0.5rem; }
+    .mod-card p{ font-size:0.87rem;color:var(--text-dim); }
+    .self-paced-note {
+      display:flex;align-items:center;gap:0.7rem;margin-top:1.4rem;padding:0.9rem 1.1rem;
+      background:var(--accent-dim);border:1px solid rgba(139,92,246,0.3);border-radius:12px;
+      font-size:0.85rem;color:var(--accent-light);
+    }
+    .self-paced-note i{ font-size:1rem; }
+
+    /* features */
+    .feat-grid{ display:grid;grid-template-columns:repeat(4,1fr);gap:1rem; }
+    .feat-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.3rem;transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+    .feat-card:hover{ transform:translateY(-4px);background:var(--bg-card-hover);border-color:var(--accent-dim); }
+    .feat-card i{ color:var(--accent-light);font-size:1.2rem;margin-bottom:0.7rem;display:block; }
+    .feat-card h4{ font-size:0.92rem;font-weight:700;font-family:'DM Sans',sans-serif; }
+
+    /* scope */
+    .scope{ display:grid;grid-template-columns:1fr 1fr;gap:1.5rem; }
+    .scope-card {
+      border-radius:var(--radius);padding:1.8rem;border:1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    .scope-card:hover{ transform:translateY(-4px); }
+    .scope-card.no{ background:rgba(239,68,68,0.06);border-color:rgba(239,68,68,0.25); }
+    .scope-card.yes{ background:rgba(37,211,102,0.06);border-color:rgba(37,211,102,0.3); }
+    .scope-card h3{ font-size:1.05rem;margin-bottom:1rem; }
+    .scope-card ul{ list-style:none; }
+    .scope-card li{ font-size:0.92rem;margin-bottom:0.7rem;display:flex;gap:0.6rem;color:var(--text-dim); }
+    .scope-card.no li i{ color:#ef4444;margin-top:0.2rem; }
+    .scope-card.yes li i{ color:var(--wa);margin-top:0.2rem; }
+
+    /* instructor */
+    .instructor {
+      display:flex;gap:2rem;align-items:center;
+      background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:2.2rem;
+      transition: all 0.3s ease;
+    }
+    .instructor:hover{ border-color:var(--accent-dim);box-shadow:0 20px 40px -20px rgba(139,92,246,0.2); }
+    .instructor .pic {
+      width:96px;height:96px;border-radius:50%;flex-shrink:0;
+      background:linear-gradient(135deg,var(--accent),#5b21b6);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:#fff;
+      box-shadow:0 0 0 3px rgba(139,92,246,0.3);
+      transition:0.3s;overflow:hidden;
+    }
+    .instructor .pic img{ width:100%;height:100%;object-fit:cover; }
+    .instructor:hover .pic{ box-shadow:0 0 0 6px rgba(139,92,246,0.5);transform:scale(1.03); }
+    .instructor h3{ font-size:1.2rem;margin-bottom:0.3rem; }
+    .instructor .role{ color:var(--accent-light);font-size:0.85rem;font-weight:600;margin-bottom:0.7rem; }
+    .instructor p{ color:var(--text-dim);font-size:0.92rem; }
+
+    /* experience stats */
+    .exp-stats{ display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:600px;margin:0 auto 2.5rem; }
+    .exp-stat{ background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;transition:0.3s; }
+    .exp-stat:hover{ transform:translateY(-4px);border-color:var(--accent-dim); }
+    .exp-stat .num{ display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:2.2rem;color:var(--accent-light); }
+    .exp-stat .lbl{ font-size:0.8rem;color:var(--text-dim); }
+
+    /* client logos strip */
+    .logo-strip-wrap{ background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 0;overflow:hidden; }
+    .logo-strip-wrap .label{ text-align:center;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:1rem; }
+    .logo-scroll{ display:flex;gap:2rem;white-space:nowrap;animation:scroll-logos 30s linear infinite;width:max-content;padding:0 1rem; }
+    .logo-scroll .group{ display:flex;gap:2rem; }
+    .logo-item{ display:flex;flex-direction:column;align-items:center;gap:0.25rem;min-width:80px; }
+    .logo-item img{ height:40px;width:auto;object-fit:contain;filter:brightness(0.7) grayscale(0.3);transition:0.3s; }
+    .logo-item:hover img{ filter:brightness(1) grayscale(0); }
+    .logo-item span{ font-size:0.6rem;color:var(--text-dim);text-align:center; }
+    @keyframes scroll-logos{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+    /* testimonials */
+    .testimonials-scroll {
+      overflow-x:auto;padding-bottom:1.2rem;
+      scrollbar-width:thin;scrollbar-color:rgba(139,92,246,0.35) transparent;
+    }
+    .testimonials-scroll::-webkit-scrollbar{ height:4px; }
+    .testimonials-scroll::-webkit-scrollbar-track{ background:transparent; }
+    .testimonials-scroll::-webkit-scrollbar-thumb{ background:rgba(139,92,246,0.35);border-radius:4px; }
+    .testimonials-track{ display:flex;gap:1.1rem;min-width:min-content;padding:0.5rem 0.25rem 0.25rem; }
+    .testimonial-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:14px;
+      padding:1.2rem 1.3rem 1.1rem;width:290px;flex-shrink:0;
+      display:flex;flex-direction:column;
+      transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+    .testimonial-card:hover{ transform:translateY(-4px);border-color:var(--accent-dim);box-shadow:0 16px 32px -16px rgba(139,92,246,0.3); }
+    .tc-top{ display:flex;align-items:flex-start;gap:0.75rem;margin-bottom:0.5rem; }
+    .tc-avatar {
+      width:40px;height:40px;border-radius:50%;flex-shrink:0;object-fit:cover;
+      background:linear-gradient(135deg,var(--accent),#5b21b6);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;font-size:0.88rem;color:#fff;overflow:hidden;
+    }
+    .tc-avatar img{ width:100%;height:100%;object-fit:cover;border-radius:50%; }
+    .tc-name-wrap{ flex:1;min-width:0; }
+    .tc-name{ font-size:0.86rem;font-weight:700;color:var(--text);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .tc-role{ font-size:0.7rem;color:var(--text-dim);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .tc-meta{ display:flex;align-items:center;gap:0.6rem;margin-bottom:0.55rem; }
+    .tc-stars{ color:#f59e0b;font-size:0.8rem;letter-spacing:1px;line-height:1; }
+    .tc-date{ font-size:0.68rem;color:var(--text-dim); }
+    .tc-message{ font-size:0.8rem;color:var(--text-dim);line-height:1.55;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden; }
+    .tc-loading{ font-size:0.82rem;color:var(--text-dim);padding:1rem 0.5rem;font-style:italic;flex-shrink:0;display:flex;align-items:center;gap:0.5rem; }
+
+    /* pricing */
+    .price-card {
+      max-width:420px;margin:0 auto;text-align:center;
+      background:var(--bg-card);border:1px solid var(--accent-dim);
+      border-radius:20px;padding:2.4rem 2rem;
+      box-shadow:0 0 0 1px rgba(139,92,246,0.15), 0 20px 60px -20px rgba(139,92,246,0.25);
+      transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .price-card:hover{ transform:scale(1.02);box-shadow:0 0 0 1px rgba(139,92,246,0.4), 0 30px 70px -20px rgba(139,92,246,0.4); }
+    .price-card .seats{ font-size:0.8rem;color:var(--wa);font-weight:700;margin-bottom:1rem; }
+    .price-card .amount{ font-family:'Syne',sans-serif;font-weight:800;font-size:2.6rem;margin-bottom:0.2rem; }
+    .price-card .amount sup{ font-size:1.1rem;color:var(--text-dim);font-weight:600; }
+    .price-card .note{ font-size:0.8rem;color:var(--text-dim);margin-bottom:1.6rem; }
+    .price-list{ list-style:none;text-align:left;margin-bottom:1.8rem; }
+    .price-list li{ font-size:0.9rem;margin-bottom:0.65rem;display:flex;gap:0.6rem; }
+    .price-list li i{ color:var(--wa);margin-top:0.2rem; }
+    .price-card .btn{ width:100%;justify-content:center; }
+
+    /* faq */
+    .faq-item{ border-bottom:1px solid var(--border);padding:1.2rem 0; }
+    .faq-item summary {
+      cursor:pointer;font-weight:700;font-size:0.98rem;list-style:none;
+      display:flex;justify-content:space-between;align-items:center;
+      transition:0.2s;
+    }
+    .faq-item summary:hover{ color:var(--accent-light); }
+    .faq-item summary::-webkit-details-marker{ display:none; }
+    .faq-item summary::after{ content:'+';font-size:1.3rem;color:var(--accent-light);font-weight:400;transition:0.25s; }
+    .faq-item[open] summary::after{ content:'–';transform:rotate(180deg); }
+    .faq-item p{ color:var(--text-dim);font-size:0.9rem;margin-top:0.7rem; }
+
+    /* form */
+    .form-wrap {
+      max-width:560px;margin:0 auto;
+      background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:2.2rem;
+      transition:0.3s;
+    }
+    .form-wrap:hover{ border-color:var(--accent-dim); }
+    .field{ margin-bottom:1.1rem; }
+    .field label{ display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.45rem;color:var(--text-dim); }
+    .field input,.field select {
+      width:100%;background:var(--bg);border:1px solid var(--border);
+      color:var(--text);border-radius:10px;padding:0.75rem 0.9rem;font-size:0.95rem;
+      font-family:'DM Sans',sans-serif;
+      transition:0.2s;
+    }
+    .field input:focus,.field select:focus{ border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(139,92,246,0.2); }
+    .form-wrap .btn{ width:100%;justify-content:center;margin-top:0.4rem; }
+    .form-note{ text-align:center;font-size:0.82rem;color:var(--text-dim);margin-top:1rem; }
+    .form-note a{ color:var(--accent-light);font-weight:600; }
+    #formStatus{ text-align:center;font-size:0.85rem;margin-top:0.8rem;min-height:1.2em;color:var(--wa); }
+
+    /* final cta */
+    .final-cta{ text-align:center; }
+    .final-cta h2{ font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:1rem; }
+    .final-cta p{ color:var(--text-dim);max-width:480px;margin:0 auto 2rem; }
+
+    /* footer */
+    footer{ border-top:1px solid var(--border);padding:2.2rem 0;text-align:center; }
+    footer p{ font-size:0.82rem;color:var(--text-dim); }
+
+    /* whatsapp float */
+    .wa-float {
+      position:fixed;bottom:1.4rem;right:1.4rem;z-index:60;
+      width:56px;height:56px;border-radius:50%;background:var(--wa);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 24px rgba(37,211,102,0.4);
+      transition: all 0.3s ease;
+    }
+    .wa-float:hover{ transform:scale(1.1) rotate(-2deg);box-shadow:0 12px 32px rgba(37,211,102,0.6); }
+
+    /* reveal */
+    .reveal{ opacity:1; transform:none; }
+    body.js-reveal-ready .reveal{ opacity:0; transform:translateY(30px); transition:opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1); }
+    body.js-reveal-ready .reveal.in{ opacity:1; transform:none; }
+
+    /* responsive */
+    @media (max-width:760px){
+      .problems{ grid-template-columns:1fr; }
+      .who-grid{ grid-template-columns:1fr 1fr; }
+      .vid-row{ grid-template-columns:1fr 1fr; }
+      .feat-grid{ grid-template-columns:1fr 1fr; }
+      .modules-grid{ grid-template-columns:1fr; }
+      .scope{ grid-template-columns:1fr; }
+      .instructor{ flex-direction:column;text-align:center; }
+      .stats{ gap:1.4rem; }
+      .exp-stats{ grid-template-columns:1fr;max-width:300px; }
+      section{ padding:3.2rem 0; }
+    }
+    @media (max-width:480px){
+      .who-grid{ grid-template-columns:1fr 1fr; }
+      .vid-row{ grid-template-columns:1fr 1fr; }
+      .feat-grid{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <div class="brand">3D Holographic Ads<span class="sub">by Sanjay Meher</span></div>
+    <div class="topbar-links">
+      <a href="#book" class="btn btn-primary btn-sm">Get the course — ₹99</a>
+      <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I%20have%20a%20question%20about%20the%203D%20Holographic%20Ads%20course" target="_blank" rel="noopener" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> Ask a question</a>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="container">
+
+    <!-- HERO -->
+    <section class="hero reveal in">
+      <div class="badge"><span class="dot"></span> Recorded course · Watch anytime · ₹99</div>
+      <h1>Master <span class="holo-text">3D Holographic</span> and Product videos using Free AI Tools</h1>
+      <p class="hero-sub">Learn to create <strong>3D holographic and product visualization videos</strong> for social ads — using only free AI tools. This isn't a generic "AI video editing" course. It's one specific, screen-stopping style, taught start to finish.</p>
+      <div class="hero-ctas">
+        <a href="#book" class="btn btn-primary">Get the course — ₹99 →</a>
+        <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I%20have%20a%20question%20about%20the%203D%20Holographic%20Ads%20course" target="_blank" rel="noopener" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Ask a question</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="num">₹99</span><span class="lbl">One-time</span></div>
+        <div class="stat"><span class="num">Recorded</span><span class="lbl">Watch anytime</span></div>
+        <div class="stat"><span class="num">₹0</span><span class="lbl">Paid software</span></div>
+        <div class="stat"><span class="num">Lifetime</span><span class="lbl">Access</span></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- STRIP -->
+  <div class="strip">
+    <div class="track">
+      <span><i class="fa-solid fa-check"></i>Free AI tools only</span>
+      <span><i class="fa-solid fa-check"></i>3D holographic style</span>
+      <span><i class="fa-solid fa-check"></i>Product visualization</span>
+      <span><i class="fa-solid fa-check"></i>Recorded, watch anytime</span>
+      <span><i class="fa-solid fa-check"></i>Built for social ads</span>
+      <span><i class="fa-solid fa-check"></i>Free AI tools only</span>
+      <span><i class="fa-solid fa-check"></i>3D holographic style</span>
+      <span><i class="fa-solid fa-check"></i>Product visualization</span>
+      <span><i class="fa-solid fa-check"></i>Recorded, watch anytime</span>
+      <span><i class="fa-solid fa-check"></i>Built for social ads</span>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- PROBLEMS -->
+    <section class="reveal">
+      <div class="section-head">
+        <div class="eyebrow">Sound familiar?</div>
+        <h2>Every AI course promises the same thing.</h2>
+        <p>This one teaches a specific, in-demand look — not a grab-bag of prompts.</p>
+      </div>
+      <div class="problems">
+        <div class="p-card"><div class="p-q">"I've tried AI video tools but everything looks generic and cheap."</div><div class="p-a"><i class="fa-solid fa-check"></i>You'll learn one distinct style — holographic + product viz — built with intention, not random prompts.</div></div>
+        <div class="p-card"><div class="p-q">"I don't have a studio, product photography, or a budget for paid AI tools."</div><div class="p-a"><i class="fa-solid fa-check"></i>Every tool used here is free. You just need a product photo and a laptop.</div></div>
+        <div class="p-card"><div class="p-q">"Is this just another 'type a prompt, get a video' course?"</div><div class="p-a"><i class="fa-solid fa-check"></i>No. You'll learn the actual creative workflow — composition, lighting, motion — behind ads that look 3D-rendered.</div></div>
+        <div class="p-card"><div class="p-q">"I want to learn on my own schedule, not show up live."</div><div class="p-a"><i class="fa-solid fa-check"></i>It's fully recorded. Watch it in one sitting or spread it across a week — your call.</div></div>
+      </div>
+    </section>
+
+    <!-- WHO IS IT FOR -->
+    <section class="reveal" id="who">
+      <div class="section-head">
+        <div class="eyebrow">Built for</div>
+        <h2>Who this course is for.</h2>
+        <p>If you sell, market, or showcase a product on video, this is for you.</p>
+      </div>
+      <div class="who-grid">
+        <div class="who-card">
+          <div class="who-icon"><i class="fa-solid fa-store"></i></div>
+          <h4>Ecommerce Sellers</h4>
+          <p>Turn a plain product photo into a scroll-stopping 3D-style ad, without a shoot or a studio.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-icon"><i class="fa-solid fa-bullhorn"></i></div>
+          <h4>Digital Marketers</h4>
+          <p>Add a genuinely distinct visual style to client ad creatives — one competitors aren't using.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-icon"><i class="fa-solid fa-video"></i></div>
+          <h4>Content Creators</h4>
+          <p>Give brand and sponsor content a premium, futuristic look with tools you already have.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-icon"><i class="fa-solid fa-laptop-code"></i></div>
+          <h4>Freelance Editors</h4>
+          <p>Offer a niche, higher-value service most editors can't — 3D-style product visualization.</p>
+        </div>
+        <div class="who-card">
+          <div class="who-icon"><i class="fa-solid fa-cube"></i></div>
+          <h4>Product Founders</h4>
+          <p>Pitch, launch, or promote your product with visuals that feel high-production, on a ₹99 budget.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEO SHOWCASE -->
+    <section class="reveal" id="video">
+      <div class="section-head">
+        <div class="eyebrow">My Work</div>
+        <h2>Proof, not just promises.</h2>
+        <p>Real reels from <a href="https://www.instagram.com/freelance.sanjay/" target="_blank" rel="noopener" style="color:var(--accent-light);font-weight:600;">@freelance.sanjay</a> — AI-assisted edits, straight from Instagram.</p>
+      </div>
+      <div class="reels-grid" id="reelsGrid">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/Dbe3bXls-Vm/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbZvbOsMomW/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbcistBMBdb/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbWJc4bS9hI/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbSAdbtsSXD/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbLZL7is2Sc/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbBluUpygxa/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbIz3o2ML7M/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DaDQVOasR8i/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DaF8eUoPhe4/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DaIU0uEMpW3/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbFOJ5jSRlL/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbkNnGKMfqs/" data-instgrm-version="14"></blockquote>
+      </div>
+    </section>
+
+    <!-- MODULES -->
+    <section class="reveal" id="modules">
+      <div class="section-head">
+        <div class="eyebrow">What you'll learn</div>
+        <h2>One style, taught properly.</h2>
+        <p>Short, focused, recorded lessons — go through them at your own pace.</p>
+      </div>
+      <div class="modules-grid">
+        <div class="mod-card">
+          <span class="mod-num">MODULE 01</span>
+          <h4>The Holographic Look, Deconstructed</h4>
+          <p>What actually makes a video read as "3D holographic" — light, glow, transparency, and motion — before you touch a single tool.</p>
+        </div>
+        <div class="mod-card">
+          <span class="mod-num">MODULE 02</span>
+          <h4>Turning a Product Photo into a 3D Scene</h4>
+          <p>Take one flat product shot and build it into a floating, dimensional visual using free AI generation tools.</p>
+        </div>
+        <div class="mod-card">
+          <span class="mod-num">MODULE 03</span>
+          <h4>Motion, Camera Moves &amp; Composition</h4>
+          <p>Add camera movement, rotation, and reveal timing so the product feels alive on screen, not like a static render.</p>
+        </div>
+        <div class="mod-card">
+          <span class="mod-num">MODULE 04</span>
+          <h4>Editing, Export &amp; Publishing for Ads</h4>
+          <p>Cut it together, add sound and captions, and export it correctly for Reels, Shorts, and paid social ad placements.</p>
+        </div>
+      </div>
+      <div class="self-paced-note"><i class="fa-solid fa-circle-info"></i> Fully recorded — no live sessions, no fixed schedule. Watch, pause, and rewatch whenever you want.</div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="reveal" id="features">
+      <div class="section-head">
+        <div class="eyebrow">What's covered</div>
+        <h2>Everything that makes it look 3D.</h2>
+        <p>Not filters — an actual visual technique, taught step by step.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card"><i class="fa-solid fa-cube"></i><h4>3D Holographic Style</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-box-open"></i><h4>Product Visualization</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-robot"></i><h4>Free AI Generation Tools</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-lightbulb"></i><h4>Light &amp; Glow Effects</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-camera-rotate"></i><h4>Camera Motion</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-layer-group"></i><h4>Scene Composition</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-closed-captioning"></i><h4>Captions &amp; Sound</h4></div>
+        <div class="feat-card"><i class="fa-solid fa-share-nodes"></i><h4>Export for Social Ads</h4></div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE & CLIENTS -->
+    <section class="reveal">
+      <div class="section-head">
+        <div class="eyebrow">Trusted By</div>
+        <h2>7+ Years of <span class="grad">Editing Experience</span></h2>
+        <p>18+ brands across gaming, food, fashion, real estate, tech, and education.</p>
+      </div>
+
+      <div class="exp-stats">
+        <div class="exp-stat">
+          <span class="num">7+</span>
+          <span class="lbl">Years Experience</span>
+        </div>
+        <div class="exp-stat">
+          <span class="num">18+</span>
+          <span class="lbl">Brands Served</span>
+        </div>
+        <div class="exp-stat">
+          <span class="num">6</span>
+          <span class="lbl">Industries</span>
+        </div>
+      </div>
+
+      <div class="logo-strip-wrap">
+        <p class="label">Brands I've worked with</p>
+        <div class="logo-scroll">
+          <div class="group">
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/3-meter-story.png" alt="3 Meter Story" /><span>3 Meter Story</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/astro.png" alt="Astro" /><span>Astro</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/bumble-bee.png" alt="Bumble Bee" /><span>Bumble Bee</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/skination.png" alt="Skination" /><span>Skination</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/dgd.png" alt="DGD" /><span>DGD</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/digital-poonam.png" alt="Digital Poonam" /><span>Digital Poonam</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/dunkey.png" alt="Dunkey" /><span>Dunkey</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/gayatri-dental-clinic.png" alt="Gayatri Dental" /><span>Gayatri Dental</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/hira-industries.png" alt="Hira Industries" /><span>Hira Industries</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/home-storey.png" alt="Home Storey" /><span>Home Storey</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/ms-financials.png" alt="MS Financials" /><span>MS Financials</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/rk-polymers.png" alt="RK Polymers" /><span>RK Polymers</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/noxonlife.png" alt="Noxonlife" /><span>Noxonlife</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/rk-sharda.png" alt="RK Sharda" /><span>RK Sharda</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/robonite.png" alt="Robonite" /><span>Robonite</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/rpm.png" alt="RPM" /><span>RPM</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/starscape.png" alt="Starscape" /><span>Starscape</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/zin-zen.png" alt="Zin Zen" /><span>Zin Zen</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/trisimplify.png" alt="Trisimplify" /><span>Trisimplify</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/turnip.png" alt="Turnip" /><span>Turnip</span></div>
+          </div>
+          <div class="group" aria-hidden="true">
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/3-meter-story.png" alt="" /><span>3 Meter Story</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/astro.png" alt="" /><span>Astro</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/bumble-bee.png" alt="" /><span>Bumble Bee</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/skination.png" alt="" /><span>Skination</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/dgd.png" alt="" /><span>DGD</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/digital-poonam.png" alt="" /><span>Digital Poonam</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/dunkey.png" alt="" /><span>Dunkey</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/gayatri-dental-clinic.png" alt="" /><span>Gayatri Dental</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/hira-industries.png" alt="" /><span>Hira Industries</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/home-storey.png" alt="" /><span>Home Storey</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/ms-financials.png" alt="" /><span>MS Financials</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/rk-polymers.png" alt="" /><span>RK Polymers</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/noxonlife.png" alt="" /><span>Noxonlife</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/rk-sharda.png" alt="" /><span>RK Sharda</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/robonite.png" alt="" /><span>Robonite</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/rpm.png" alt="" /><span>RPM</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/starscape.png" alt="" /><span>Starscape</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/zin-zen.png" alt="" /><span>Zin Zen</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/trisimplify.png" alt="" /><span>Trisimplify</span></div>
+            <div class="logo-item"><img src="../sanjaymeher/client-logos/turnip.png" alt="" /><span>Turnip</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPE / REFRAME -->
+    <section class="reveal">
+      <div class="section-head">
+        <div class="eyebrow">Let's be clear upfront</div>
+        <h2>What this course is — and isn't.</h2>
+      </div>
+      <div class="scope">
+        <div class="scope-card no">
+          <h3>✕ This is NOT a generic AI editing course</h3>
+          <ul>
+            <li><i class="fa-solid fa-xmark"></i>A random tour of every AI tool on the internet</li>
+            <li><i class="fa-solid fa-xmark"></i>"Type a prompt, get a video" with no real technique</li>
+            <li><i class="fa-solid fa-xmark"></i>Generic AI clips with no composition or direction</li>
+            <li><i class="fa-solid fa-xmark"></i>A course that teaches everything, and nothing, at once</li>
+          </ul>
+        </div>
+        <div class="scope-card yes">
+          <h3>✓ You'll actually learn</h3>
+          <ul>
+            <li><i class="fa-solid fa-check"></i>One specific, in-demand style: 3D holographic + product visualization</li>
+            <li><i class="fa-solid fa-check"></i>How to turn a plain product photo into an ad-ready visual</li>
+            <li><i class="fa-solid fa-check"></i>The composition and motion choices behind the look</li>
+            <li><i class="fa-solid fa-check"></i>A workflow built entirely on free AI tools</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTRUCTOR -->
+    <section class="reveal">
+      <div class="section-head">
+        <div class="eyebrow">Who's teaching</div>
+        <h2>You'll be learning from me, directly.</h2>
+      </div>
+      <div class="instructor">
+        <div class="pic">
+          <img src="../sanjaymeher/images/passport.jpg" alt="Sanjay Meher" />
+        </div>
+        <div>
+          <h3>Sanjay Meher</h3>
+          <div class="role">Video Editor &amp; Designer · 7+ years</div>
+          <p>I've edited and designed for 18+ brands across gaming, food, fashion, and tech. Every lesson in this course is recorded by me personally, showing the exact workflow I use — no filler, no recycled tutorials pulled from elsewhere.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="reveal" id="pricing">
+      <div class="section-head">
+        <div class="eyebrow">One price. No upsells.</div>
+        <h2>Everything, for ₹99.</h2>
+      </div>
+      <div class="price-card">
+        <div class="seats">⚡ Recorded course · instant access</div>
+        <div class="amount">₹99</div>
+        <div class="note">One-time payment · Lifetime access · No hidden cost</div>
+        <ul class="price-list">
+          <li><i class="fa-solid fa-check"></i>Full recorded course — watch anytime, at your own pace</li>
+          <li><i class="fa-solid fa-check"></i>3D holographic &amp; product visualization technique, start to finish</li>
+          <li><i class="fa-solid fa-check"></i>Built entirely on free AI tools — no paid software needed</li>
+          <li><i class="fa-solid fa-check"></i>Lifetime access — rewatch whenever you need a refresher</li>
+          <li><i class="fa-solid fa-check"></i>Direct workflow from Sanjay's own client work</li>
+        </ul>
+        <a href="#book" class="btn btn-primary">Get the course — ₹99 →</a>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="reveal" id="testimonials">
+      <div class="section-head">
+        <div class="eyebrow">What students say</div>
+        <h2>Trusted by learners &amp; clients.</h2>
+        <p>Real reviews from people who've learned from or worked with Sanjay.</p>
+      </div>
+      <div class="testimonials-scroll">
+        <div class="testimonials-track" id="testimonialsTrack">
+
+          <div class="testimonial-card">
+            <div class="tc-top">
+              <div class="tc-avatar">
+                <img src="images/moumita.jpg" alt="Moumita Dhiran"
+                     onerror="this.style.display='none';this.parentElement.textContent='MD'"/>
+              </div>
+              <div class="tc-name-wrap">
+                <div class="tc-name">Moumita Dhiran</div>
+                <div class="tc-role">Digital Marketer · 21 reviews</div>
+              </div>
+            </div>
+            <div class="tc-meta"><span class="tc-stars">★★★★★</span><span class="tc-date">28 Jul 2024</span></div>
+            <div class="tc-message">Amazing teacher... Awesome graphic designer...</div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="tc-top">
+              <div class="tc-avatar">
+                <img src="images/kanchan.png" alt="Kanchan Malu"
+                     onerror="this.style.display='none';this.parentElement.textContent='KM'"/>
+              </div>
+              <div class="tc-name-wrap">
+                <div class="tc-name">Kanchan Malu</div>
+                <div class="tc-role">Digital Marketer · 1 review</div>
+              </div>
+            </div>
+            <div class="tc-meta"><span class="tc-stars">★★★★★</span><span class="tc-date">8 Jul 2024</span></div>
+            <div class="tc-message">Thank you Sanjay sir, it was wonderful month with lots of learning in your session. In these sessions you taught us with great depth and patience.</div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="tc-top">
+              <div class="tc-avatar">
+                <img src="images/anisha.jpg" alt="Anisha Jain"
+                     onerror="this.style.display='none';this.parentElement.textContent='AJ'"/>
+              </div>
+              <div class="tc-name-wrap">
+                <div class="tc-name">Anisha Jain</div>
+                <div class="tc-role">Digital Marketer · 2 reviews</div>
+              </div>
+            </div>
+            <div class="tc-meta"><span class="tc-stars">★★★★★</span><span class="tc-date">28 Apr 2024</span></div>
+            <div class="tc-message">I have done a video editing course from Graphicy (Sanjay Sir). He has explained and taught deeply every thing in a very detailed and easy manner.</div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="tc-top">
+              <div class="tc-avatar">
+                <img src="images/avinash.png" alt="Avinash Agrawal"
+                     onerror="this.style.display='none';this.parentElement.textContent='AA'"/>
+              </div>
+              <div class="tc-name-wrap">
+                <div class="tc-name">Avinash Agrawal</div>
+                <div class="tc-role">Businessman · 32 reviews</div>
+              </div>
+            </div>
+            <div class="tc-meta"><span class="tc-stars">★★★★★</span><span class="tc-date">28 Apr 2024</span></div>
+            <div class="tc-message">One of the best classes I have done in recent times. The way of teaching is exceptional with minute details, one should definitely go for this if wanna learn real video editing. Keep up the good work.</div>
+          </div>
+
+          <div class="tc-loading" id="tcLoading">⏳ Loading more reviews...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="reveal" id="faq">
+      <div class="section-head">
+        <div class="eyebrow">Before you ask</div>
+        <h2>Quick answers.</h2>
+      </div>
+      <div style="max-width:680px;margin:0 auto;">
+        <details class="faq-item" open>
+          <summary>Is this a live course?</summary>
+          <p>No — this is a recorded course. You get instant access and can watch it whenever suits you, at your own pace.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need to buy any software?</summary>
+          <p>No. Every AI tool used to create the 3D holographic and product visualization look is free. Paid software is never required.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is this a generic "AI video editing" course?</summary>
+          <p>No. This course teaches one specific style — 3D holographic and product visualization videos for ads — not a broad, unfocused tour of AI tools.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What if I've never used AI video tools before?</summary>
+          <p>That's fine. The course walks through the workflow step by step, from a plain product photo to a finished ad-ready video.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need a product to follow along?</summary>
+          <p>Just one product photo is enough to practice the entire technique taught in the course.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is there a certificate?</summary>
+          <p>No certificate is issued. The focus is on a real, usable skill you can apply immediately.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- BOOKING FORM -->
+    <section class="reveal" id="book">
+      <div class="section-head">
+        <div class="eyebrow">Last step</div>
+        <h2>Get instant access.</h2>
+        <p>Fill this in and it'll open WhatsApp with your details, ready to confirm.</p>
+      </div>
+      <div class="form-wrap">
+        <form id="bookingForm">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input type="text" id="name" required placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label for="phone">WhatsApp number</label>
+            <input type="tel" id="phone" required placeholder="10-digit mobile number" />
+          </div>
+          <div class="field">
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label for="level">What will you use this for?</label>
+            <select id="level">
+              <option>Selling my own products</option>
+              <option>Client / marketing work</option>
+              <option>Personal content &amp; brand</option>
+              <option>Just exploring</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Confirm on WhatsApp — ₹99</button>
+        </form>
+        <p id="formStatus"></p>
+        <p class="form-note">Just have a question, not ready to buy? <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I%20have%20a%20question%20about%20the%203D%20Holographic%20Ads%20course" target="_blank" rel="noopener">Message Sanjay directly →</a></p>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta reveal">
+      <h2>One style. One course.<br>₹99, watch whenever you want.</h2>
+      <p>No paid software, no generic AI filters — just a real, distinct visual technique, taught by someone who does this for a living.</p>
+      <a href="#book" class="btn btn-primary">Get the course — ₹99 →</a>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Sanjay Meher · 3D Holographic Ads, Made with Free AI Tools · Recorded, self-paced, ₹99.</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I%20have%20a%20question%20about%20the%203D%20Holographic%20Ads%20course" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp" style="font-size:26px;color:#fff;"></i>
+</a>
+
+<script>
+  try {
+    const reveals = document.querySelectorAll('.reveal');
+
+    if ('IntersectionObserver' in window) {
+      document.body.classList.add('js-reveal-ready');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      reveals.forEach(el => observer.observe(el));
+
+      setTimeout(() => {
+        reveals.forEach(el => el.classList.add('in'));
+      }, 4000);
+    }
+  } catch (err) {
+    console.warn('Reveal animation failed to initialize; content remains visible by default.', err);
+  }
+
+  // booking form
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const level = document.getElementById('level').value;
+
+    let msg = `Hi Sanjay, I want to get the 3D Holographic Ads course (₹99).\n\nName: ${name}\nWhatsApp: ${phone}`;
+    if(email) msg += `\nEmail: ${email}`;
+    msg += `\nUse case: ${level}`;
+
+    const url = `https://wa.me/918984636695?text=${encodeURIComponent(msg)}`;
+    document.getElementById('formStatus').textContent = 'Opening WhatsApp to confirm your access...';
+    window.open(url, '_blank', 'noopener');
+  });
+
+  // testimonials feed (same feed used on main site)
+  document.addEventListener('DOMContentLoaded', function () {
+    const REVIEWS_API = 'https://script.google.com/macros/s/AKfycbyJTwSZP6mZvrZsd6FbfqY_vd8UlJn0Vb_IDg_s7dN9V1SAEeOuia6X6pHRGzUH4iVgkQ/exec';
+
+    function starsHTML(n) {
+      n = Math.min(5, Math.max(1, n));
+      return '★'.repeat(n) + '☆'.repeat(5 - n);
+    }
+    function formatDate(raw) {
+      if (!raw) return '';
+      const d = new Date(raw);
+      if (isNaN(d)) return '';
+      return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+    function initials(name) {
+      return String(name).trim().split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?';
+    }
+    function buildCard(r) {
+      const hasImage = r.image && r.image.startsWith('http');
+      const avatarContent = hasImage
+        ? `<img src="${r.image}" alt="${r.name}" onerror="this.style.display='none';this.parentElement.textContent='${initials(r.name)}'"/>`
+        : initials(r.name);
+      return `
+      <div class="testimonial-card">
+        <div class="tc-top">
+          <div class="tc-avatar">${avatarContent}</div>
+          <div class="tc-name-wrap">
+            <div class="tc-name">${r.name}</div>
+            <div class="tc-role">${r.role || ''}</div>
+          </div>
+        </div>
+        <div class="tc-meta">
+          <span class="tc-stars">${starsHTML(r.stars)}</span>
+          <span class="tc-date">${formatDate(r.date || r.timestamp)}</span>
+        </div>
+        <div class="tc-message">${r.message}</div>
+      </div>`;
+    }
+    async function fetchReviews() {
+      const loading = document.getElementById('tcLoading');
+      if (!loading) return;
+      try {
+        const res = await fetch(REVIEWS_API);
+        const data = await res.json();
+        if (data.success && data.reviews && data.reviews.length > 0) {
+          loading.insertAdjacentHTML('beforebegin', data.reviews.map(buildCard).join(''));
+        }
+      } catch (err) {
+        console.warn('Review fetch failed:', err);
+      } finally {
+        loading.remove();
+      }
+    }
+    fetchReviews();
+  });
+</script>
+<script async src="//www.instagram.com/embed.js"></script>
+</body>
+</html>
