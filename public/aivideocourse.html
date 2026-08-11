@@ -158,8 +158,13 @@
       display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
       gap:1.4rem;justify-items:center;
     }
-    .reels-grid iframe{ border-radius:var(--radius) !important; }
-    .instagram-media{ margin:0 !important;border-color:var(--border) !important;background:var(--bg-card) !important; }
+    .reel-slot {
+      width:100%;max-width:340px;aspect-ratio:9/16;border-radius:var(--radius);overflow:hidden;
+      background:var(--bg-card);border:1px solid var(--border);
+      position:relative;transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    }
+    .reel-slot:hover{ transform:translateY(-4px);border-color:var(--accent-dim);box-shadow:0 16px 32px -16px rgba(139,92,246,0.3); }
+    .reel-slot iframe{ width:100%;height:100%;border:0;position:absolute;inset:0; }
 
     /* modules */
     .modules-grid{ display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem; }
@@ -482,19 +487,19 @@
         <p>Real reels from <a href="https://www.instagram.com/freelance.sanjay/" target="_blank" rel="noopener" style="color:var(--accent-light);font-weight:600;">@freelance.sanjay</a> — AI-assisted edits, straight from Instagram.</p>
       </div>
       <div class="reels-grid" id="reelsGrid">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/Dbe3bXls-Vm/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbZvbOsMomW/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbcistBMBdb/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbWJc4bS9hI/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbSAdbtsSXD/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbLZL7is2Sc/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbBluUpygxa/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbIz3o2ML7M/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DaDQVOasR8i/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DaF8eUoPhe4/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DaIU0uEMpW3/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbFOJ5jSRlL/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/freelance.sanjay/reel/DbkNnGKMfqs/" data-instgrm-version="14"></blockquote>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=Dbe3bXls-Vm" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbZvbOsMomW" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbcistBMBdb" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbWJc4bS9hI" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbSAdbtsSXD" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbLZL7is2Sc" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbBluUpygxa" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbIz3o2ML7M" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DaDQVOasR8i" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DaF8eUoPhe4" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DaIU0uEMpW3" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbFOJ5jSRlL" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
+        <div class="reel-slot"><iframe src="/api/proxy?shortcode=DbkNnGKMfqs" loading="lazy" allowfullscreen allowtransparency="true" scrolling="no"></iframe></div>
       </div>
     </section>
 
@@ -955,6 +960,5 @@
     fetchReviews();
   });
 </script>
-<script async src="//www.instagram.com/embed.js"></script>
 </body>
 </html>
