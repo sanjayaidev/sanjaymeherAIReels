@@ -79,6 +79,7 @@
     .btn-wa{ background:var(--wa);color:#fff; }
     .btn-wa:hover{ filter:brightness(1.08); }
     .btn-sm{ padding:0.55rem 1.1rem;font-size:0.82rem; }
+    .btn-lg{ padding:1rem 2rem;font-size:1.02rem; }
 
     /* hero */
     .hero{ padding:4rem 0 2.5rem;text-align:center; }
@@ -311,26 +312,40 @@
     .faq-item[open] summary::after{ content:'–';transform:rotate(180deg); }
     .faq-item p{ color:var(--text-dim);font-size:0.9rem;margin-top:0.7rem; }
 
-    /* form */
-    .form-wrap {
-      max-width:560px;margin:0 auto;
-      background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:2.2rem;
-      transition:0.3s;
+    /* how-to-buy steps */
+    .buy-wrap {
+      max-width:900px;margin:0 auto;
     }
-    .form-wrap:hover{ border-color:var(--accent-dim); }
-    .field{ margin-bottom:1.1rem; }
-    .field label{ display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.45rem;color:var(--text-dim); }
-    .field input,.field select {
-      width:100%;background:var(--bg);border:1px solid var(--border);
-      color:var(--text);border-radius:10px;padding:0.75rem 0.9rem;font-size:0.95rem;
-      font-family:'DM Sans',sans-serif;
-      transition:0.2s;
+    .steps-grid{ display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-bottom:2.2rem; }
+    .step-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.5rem 1.3rem;transition: all 0.3s cubic-bezier(0.23,1,0.32,1);position:relative;
     }
-    .field input:focus,.field select:focus{ border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(139,92,246,0.2); }
-    .form-wrap .btn{ width:100%;justify-content:center;margin-top:0.4rem; }
-    .form-note{ text-align:center;font-size:0.82rem;color:var(--text-dim);margin-top:1rem; }
+    .step-card:hover{ transform:translateY(-4px);background:var(--bg-card-hover);border-color:var(--accent-dim);box-shadow:0 16px 32px -16px rgba(139,92,246,0.25); }
+    .step-num {
+      width:32px;height:32px;border-radius:50%;
+      background:var(--accent-dim);border:1px solid rgba(139,92,246,0.35);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:var(--accent-light);
+      margin-bottom:0.8rem;
+    }
+    .step-card h4{ font-size:0.95rem;margin-bottom:0.45rem; }
+    .step-card p{ font-size:0.82rem;color:var(--text-dim); }
+    .buy-cta-box {
+      text-align:center;background:var(--bg-card);border:1px solid var(--accent-dim);
+      border-radius:20px;padding:2.2rem 1.8rem;
+    }
+    .buy-cta-box h3{ font-size:1.15rem;margin-bottom:0.5rem; }
+    .buy-cta-box p{ color:var(--text-dim);font-size:0.9rem;margin-bottom:1.4rem; }
+    .buy-cta-box .btn{ margin:0 auto; }
+    .pay-region-note {
+      display:flex;justify-content:center;gap:1.6rem;flex-wrap:wrap;
+      margin-top:1.4rem;font-size:0.82rem;color:var(--text-dim);
+    }
+    .pay-region-note span{ display:inline-flex;align-items:center;gap:0.45rem; }
+    .pay-region-note i{ color:var(--accent-light); }
+    .form-note{ text-align:center;font-size:0.82rem;color:var(--text-dim);margin-top:1.2rem; }
     .form-note a{ color:var(--accent-light);font-weight:600; }
-    #formStatus{ text-align:center;font-size:0.85rem;margin-top:0.8rem;min-height:1.2em;color:var(--wa); }
 
     /* final cta */
     .final-cta{ text-align:center; }
@@ -367,22 +382,38 @@
       .instructor{ flex-direction:column;text-align:center; }
       .stats{ gap:1.4rem; }
       .exp-stats{ grid-template-columns:1fr;max-width:300px; }
+      .steps-grid{ grid-template-columns:1fr 1fr; }
       section{ padding:3.2rem 0; }
     }
     @media (max-width:480px){
       .who-grid{ grid-template-columns:1fr 1fr; }
       .vid-row{ grid-template-columns:1fr 1fr; }
       .feat-grid{ grid-template-columns:1fr; }
+      .steps-grid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
 
+<!--
+  ═══════════════════════════════════════════════════════════════════════
+  DIRECT PURCHASE LINK — configure before publishing
+  This points straight at your deployed LMS's checkout page for this
+  course (see SanjayLMS repo: checkout.html reads ?course=<id> from the
+  URL). If a visitor isn't logged in yet, the LMS router will bounce them
+  to /login.html and bring them right back to this same checkout link
+  once they sign in — so it's safe to link here even for new buyers.
+  ═══════════════════════════════════════════════════════════════════════
+-->
+<script>
+  window.LMS_PURCHASE_URL = 'https://learn.sanjaymeher.online/checkout.html?course=REPLACE_WITH_COURSE_ID';
+</script>
+
 <div class="topbar">
   <div class="container">
     <div class="brand">3D Holographic Ads<span class="sub">by Sanjay Meher</span></div>
     <div class="topbar-links">
-      <a href="#book" class="btn btn-primary btn-sm">Get the course — ₹99</a>
+      <a href="#buy" class="btn btn-primary btn-sm" id="topbarBuyBtn">Get the course — ₹99</a>
       <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I%20have%20a%20question%20about%20the%203D%20Holographic%20Ads%20course" target="_blank" rel="noopener" class="btn btn-wa btn-sm"><i class="fab fa-whatsapp"></i> Ask a question</a>
     </div>
   </div>
@@ -397,7 +428,7 @@
       <h1>Master <span class="holo-text">3D Holographic</span> and Product videos using Free AI Tools</h1>
       <p class="hero-sub">Learn to create <strong>3D holographic and product visualization videos</strong> for social ads — using only free AI tools. This isn't a generic "AI video editing" course. It's one specific, screen-stopping style, taught start to finish.</p>
       <div class="hero-ctas">
-        <a href="#book" class="btn btn-primary">Get the course — ₹99 →</a>
+        <a href="#buy" class="btn btn-primary" id="heroBuyBtn">Get the course — ₹99 →</a>
         <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I%20have%20a%20question%20about%20the%203D%20Holographic%20Ads%20course" target="_blank" rel="noopener" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Ask a question</a>
       </div>
       <div class="stats">
@@ -691,7 +722,7 @@
           <li><i class="fa-solid fa-check"></i>Lifetime access — rewatch whenever you need a refresher</li>
           <li><i class="fa-solid fa-check"></i>Direct workflow from Sanjay's own client work</li>
         </ul>
-        <a href="#book" class="btn btn-primary">Get the course — ₹99 →</a>
+        <a href="#buy" class="btn btn-primary" id="pricingBuyBtn">Get the course — ₹99 →</a>
       </div>
     </section>
 
@@ -798,45 +829,63 @@
           <p>Just one product photo is enough to practice the entire technique taught in the course.</p>
         </details>
         <details class="faq-item">
+          <summary>Do I need to verify my email after signing up?</summary>
+          <p>No. Sign up with your Gmail address and you can log straight in — there's no email verification step to wait on.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I pay if I'm outside India?</summary>
+          <p>At checkout you can choose PayPal, which is available for buyers outside India. Buyers in India can pay via Cashfree.</p>
+        </details>
+        <details class="faq-item">
           <summary>Is there a certificate?</summary>
           <p>No certificate is issued. The focus is on a real, usable skill you can apply immediately.</p>
         </details>
       </div>
     </section>
 
-    <!-- BOOKING FORM -->
-    <section class="reveal" id="book">
+    <!-- HOW TO PURCHASE / DIRECT BUY -->
+    <section class="reveal" id="buy">
       <div class="section-head">
         <div class="eyebrow">Last step</div>
-        <h2>Get instant access.</h2>
-        <p>Fill this in and it'll open WhatsApp with your details, ready to confirm.</p>
+        <h2>How to get instant access.</h2>
+        <p>Four quick steps — no forms to fill in, no waiting on WhatsApp.</p>
       </div>
-      <div class="form-wrap">
-        <form id="bookingForm">
-          <div class="field">
-            <label for="name">Full name</label>
-            <input type="text" id="name" required placeholder="Your name" />
+      <div class="buy-wrap">
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <h4>Sign up with Gmail</h4>
+            <p>Create your account on the course platform using any Gmail address.</p>
           </div>
-          <div class="field">
-            <label for="phone">WhatsApp number</label>
-            <input type="tel" id="phone" required placeholder="10-digit mobile number" />
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <h4>No verification needed</h4>
+            <p>You're in immediately — no email confirmation link to click or wait for.</p>
           </div>
-          <div class="field">
-            <label for="email">Email (optional)</label>
-            <input type="email" id="email" placeholder="you@example.com" />
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <h4>Pay — Cashfree or PayPal</h4>
+            <p>In India, pay with Cashfree. Outside India, choose PayPal at checkout.</p>
           </div>
-          <div class="field">
-            <label for="level">What will you use this for?</label>
-            <select id="level">
-              <option>Selling my own products</option>
-              <option>Client / marketing work</option>
-              <option>Personal content &amp; brand</option>
-              <option>Just exploring</option>
-            </select>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <h4>Access the course</h4>
+            <p>Payment confirms instantly and the full course unlocks in your account — watch anytime.</p>
           </div>
-          <button type="submit" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Confirm on WhatsApp — ₹99</button>
-        </form>
-        <p id="formStatus"></p>
+        </div>
+
+        <div class="buy-cta-box">
+          <h3>Ready when you are.</h3>
+          <p>Click below to sign up (or log in) and go straight to checkout for this course.</p>
+          <a href="https://learn.sanjaymeher.online/checkout.html?course=REPLACE_WITH_COURSE_ID" class="btn btn-primary btn-lg" id="directBuyBtn" target="_blank" rel="noopener">
+            <i class="fa-solid fa-cart-shopping"></i> Buy Now — ₹99
+          </a>
+          <div class="pay-region-note">
+            <span><i class="fa-solid fa-location-dot"></i> India → Cashfree</span>
+            <span><i class="fa-solid fa-earth-americas"></i> Outside India → PayPal</span>
+          </div>
+        </div>
+
         <p class="form-note">Just have a question, not ready to buy? <a href="https://wa.me/918984636695?text=Hi%20Sanjay%2C%20I%20have%20a%20question%20about%20the%203D%20Holographic%20Ads%20course" target="_blank" rel="noopener">Message Sanjay directly →</a></p>
       </div>
     </section>
@@ -845,7 +894,7 @@
     <section class="final-cta reveal">
       <h2>One style. One course.<br>₹99, watch whenever you want.</h2>
       <p>No paid software, no generic AI filters — just a real, distinct visual technique, taught by someone who does this for a living.</p>
-      <a href="#book" class="btn btn-primary">Get the course — ₹99 →</a>
+      <a href="#buy" class="btn btn-primary" id="finalCtaBuyBtn">Get the course — ₹99 →</a>
     </section>
 
   </div>
@@ -862,6 +911,10 @@
 </a>
 
 <script>
+  // Wire the direct-purchase link into every "Get the course" / "Buy Now"
+  // button on the page, from the single LMS_PURCHASE_URL set at the top.
+  document.getElementById('directBuyBtn').href = window.LMS_PURCHASE_URL;
+
   try {
     const reveals = document.querySelectorAll('.reveal');
 
@@ -886,23 +939,6 @@
   } catch (err) {
     console.warn('Reveal animation failed to initialize; content remains visible by default.', err);
   }
-
-  // booking form
-  document.getElementById('bookingForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const level = document.getElementById('level').value;
-
-    let msg = `Hi Sanjay, I want to get the 3D Holographic Ads course (₹99).\n\nName: ${name}\nWhatsApp: ${phone}`;
-    if(email) msg += `\nEmail: ${email}`;
-    msg += `\nUse case: ${level}`;
-
-    const url = `https://wa.me/918984636695?text=${encodeURIComponent(msg)}`;
-    document.getElementById('formStatus').textContent = 'Opening WhatsApp to confirm your access...';
-    window.open(url, '_blank', 'noopener');
-  });
 
   // testimonials feed (same feed used on main site)
   document.addEventListener('DOMContentLoaded', function () {
